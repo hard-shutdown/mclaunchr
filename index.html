@@ -46,15 +46,22 @@
 		</header>
 		<section id="about" class="section scrollspy">
 			<div class="container">
-				<div class="row"> <a href="#" id="authlink" onclick="window.open('https://mcprox.hard-shutdown.repl.co/mcprox/getmsauthlocal')">Login</a>
-					<button id="launch" class="btn" style="display: none;" onclick="startMC('1.8.9')">Launch Minecraft 1.8.9</button>
-					<p class="col s12 center large_text"> The Impact client is an <b>advanced</b> utility mod for Minecraft, it is packaged with <b>Baritone</b> and includes a large number of <a href="https://impactclient.net/features.html" target="_blank" onclick="getOutboundLink('features'); return true;"><u>useful mods</u></a> </p>
-					<p class="col s12 center med_text"> You can view a list of past and upcoming changes <a href="https://impactclient.net/changelog" target="_blank" onclick="getOutboundLink('changelog'); return true;"><u>here</u></a>.
-						<br> The list of features and modules can be found <a href="https://impactclient.net/features.html" target="_blank" onclick="getOutboundLink('features'); return true;"><u>here</u></a>. </p>
-					<p></p>
+				<div class="row center">
+					<section id="beforeauth" class="abc col s12 center large_text">
+						<button class="btn center med_text" id="authlink" onclick="window.open('https://mcprox.hard-shutdown.repl.co/mcprox/getmsauthlocal', 'Microsoft Login', 'width=500, height=500, top=25, left=500').document.title='mclaunchr'">Login</button>
+					</section>
+					<section id="afterauth" class="abc col s12 center large_text" style="display: none;">
+						<h2 class="center large_text" id="welcomeu"></h2>
+						<select id="versionselect">
+							<option value="" selected>Choose Version</option>
+						</select>
+						<button id="launch" class="btn center med_text" onclick="startMC('1.8.9')">Launch Minecraft 1.8.9</button>
+					</section>
+					<p class="col s12 center med_text"></p>
 				</div>
 			</div>
 		</section>
+		<!--
 		<footer id="contact" class="page-footer scrollspy">
 			<div class="footer-copyright">
 				<div class="container"> © 2016 - 2020 Impact Development - Website based on a <a class="white-text" href="https://github.com/joashp/material-design-template">template</a> by <a class="white-text" href="http://joashpereira.com/">Joash Pereira</a>.
@@ -64,6 +71,7 @@
 					<br> GDPR: contact us </div>
 			</div>
 		</footer>
+		-->
 		<script type="text/javascript" src="js/modernizr.min.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>

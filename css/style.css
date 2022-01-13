@@ -1,5 +1,9 @@
 /* http://www.minifier.org */
 
+.afterauth {
+	display: none
+}
+
 .hidden {
     display: none
 }

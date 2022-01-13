@@ -11,16 +11,23 @@ app.get('/authfinish', function (req, res) {
 	res.end(atob(
 		'PHNjcmlwdD53aW5kb3cuY2xvc2UoKTwvc2NyaXB0Pg=='
 	));
-	var aa = document.getElementById(
-		"authlink")
-	aa.parentNode.removeChild(aa)
-	//document.getElementById("welcomeu").innerHTML = `Welcome, ${window.auth.name}`
-	document.getElementById("launch").style
-		.display = '';
+	window.document.getElementById("welcomeu").innerHTML = `Welcome, ${window.auth.name}`
+	window.document.getElementById("afterauth").style.display = '';
+	var a = window.document.getElementById("beforeauth")
+	a.parentNode.removeChild(a)
 	console.log(
 		`Authorized As: ${window.auth.name}`
 	);
 })
+
+fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json").then(res => res.json()).then(json => {
+	Object.entries(json.versions).forEach(([key, value]) => {
+      if(json.versions[key].type === "release"){
+		  console.log(json.versions[key].id)
+	  }
+    })
+})
+
 
 function startMC(version) {
 	var mcDir = require(
@@ -63,10 +70,8 @@ function startMC(version) {
 		}
 	}
 	launcher.launch(opts);
-	launcher.on('debug', (e) => console.log(
-		e));
-	launcher.on('data', (e) => console.log(
-		e));
+	launcher.on('debug', (e) => console.log(e));
+	launcher.on('data', (e) => console.log(e));
 }
 app.listen(8867);
 process.env.PATH = "";
