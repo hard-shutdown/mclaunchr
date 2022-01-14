@@ -22,8 +22,13 @@ app.get('/authfinish', function (req, res) {
 
 fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json").then(res => res.json()).then(json => {
 	Object.entries(json.versions).forEach(([key, value]) => {
-      if(json.versions[key].type === "release"){
-		  console.log(json.versions[key].id)
+    	if(json.versions[key].type === "release"){
+			var a = document.createElement("select");
+		  	a.value = json.versions[key].id;
+		  	const str = json.versions[key].type;
+		  	const str2 = str.charAt(0).toUpperCase() + str.slice(1);
+		  	a.innerHTML = str2 + " " + json.versions[key].id;
+		  	document.getElementById("versionselect").appendChild()
 	  }
     })
 })
