@@ -11,10 +11,7 @@ app.get('/authfinish', function (req, res) {
 	res.end(atob(
 		'PHNjcmlwdD53aW5kb3cuY2xvc2UoKTwvc2NyaXB0Pg=='
 	));
-	window.document.getElementById("welcomeu").innerHTML = `Welcome, ${window.auth.name}`
-	window.document.getElementById("afterauth").style.display = '';
-	var a = window.document.getElementById("beforeauth")
-	a.parentNode.removeChild(a)
+	postAuth();
 	console.log(
 		`Authorized As: ${window.auth.name}`
 	);
@@ -22,12 +19,39 @@ app.get('/authfinish', function (req, res) {
 
 fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json").then(res => res.json()).then(json => {
 	Object.entries(json.versions).forEach(([key, value]) => {
-      if(json.versions[key].type === "release"){
-		  console.log(json.versions[key].id)
+    	if(json.versions[key].type === "release"){
+			console.log(json.versions[key])
+			var a = document.createElement("option");
+		  	a.value = json.versions[key].id;
+		  	const str = json.versions[key].type;
+		  	const str2 = str.charAt(0).toUpperCase() + str.slice(1);
+		  	a.innerHTML = str2 + " " + json.versions[key].id;
+		  	document.getElementById("versionselect").appendChild(a)
 	  }
     })
 })
 
+function postAuth(){
+	window.document.getElementById("welcomeu").innerHTML = `Welcome, ${window.auth.name}`
+	window.document.getElementById("afterauth").style.display = '';
+	window.document.getElementById("versionselect").style.display = 'block';
+	var a = window.document.getElementById("beforeauth")
+	a.parentNode.removeChild(a)
+}
+
+
+function chgVersion(){
+	var a = document.getElementById("versionselect").value;
+	if (a != "") {
+		document.getElementById("launch").innerHTML = "LAUNCH MINECRAFT " + a;
+		window.selV = a;
+		document.getElementById("launch").disabled = false;
+	} else {
+		document.getElementById("launch").disabled = true;
+		document.getElementById("launch").innerHTML = "LAUNCH MINECRAFT " + a;
+	}
+	
+}
 
 function startMC(version) {
 	var mcDir = require(
