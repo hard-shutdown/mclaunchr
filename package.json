@@ -1,10 +1,10 @@
 {
-  "name": "mclaunchr",
+  "name": "yeetlauncher",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "C:\\Users\\codyb\\AppData\\Local\\Programs\\NW.JS\\nw.exe ."
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
