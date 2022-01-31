@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
+var mcDir = require("minecraft-folder-path");
 var app = express();
 app.get('/authfinish', function (req, res) {
 	window.auth = {
@@ -15,21 +16,38 @@ app.get('/authfinish', function (req, res) {
 	console.log(
 		`Authorized As: ${window.auth.name}`
 	);
-})
 
+	app.close()
+})
+const addToSelect = (value, type) => {
+	var a = document.createElement("option");
+	a.value = value;
+	global.versionArray.push(value)  
+	const str = type;
+	const str2 = str.charAt(0).toUpperCase() + str.slice(1);
+	a.innerHTML = str2 + " " + value;
+	window.document.getElementById("versionselect").appendChild(a)
+}
+
+global.versionArray = [];
 fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json").then(res => res.json()).then(json => {
 	Object.entries(json.versions).forEach(([key, value]) => {
     	if(json.versions[key].type === "release"){
 			console.log(json.versions[key])
-			var a = document.createElement("option");
-		  	a.value = json.versions[key].id;
-		  	const str = json.versions[key].type;
-		  	const str2 = str.charAt(0).toUpperCase() + str.slice(1);
-		  	a.innerHTML = str2 + " " + json.versions[key].id;
-		  	document.getElementById("versionselect").appendChild(a)
-	  }
+			addToSelect(json.versions[key].id, 'release')
+	  	} else if (json.versions[key].type === "snapshot") {
+			global.versionArray.push(json.versions[key].id)
+		}
     })
+	fs.readdirSync(path.join(mcDir, "versions")).forEach((elem) => {
+		if(!(global.versionArray.includes(elem))) {
+			if(!(elem.includes(".json"))) {
+				addToSelect(elem, 'modified')
+			}
+		}
+	})
 })
+
 
 function postAuth(){
 	window.document.getElementById("welcomeu").innerHTML = `Welcome, ${window.auth.name}`
@@ -43,22 +61,19 @@ function postAuth(){
 function chgVersion(){
 	var a = document.getElementById("versionselect").value;
 	if (a != "") {
-		document.getElementById("launch").innerHTML = "LAUNCH MINECRAFT " + a;
+		//document.getElementById("launch").innerHTML = "LAUNCH MINECRAFT " + a;
 		window.selV = a;
 		document.getElementById("launch").disabled = false;
 	} else {
 		document.getElementById("launch").disabled = true;
-		document.getElementById("launch").innerHTML = "LAUNCH MINECRAFT " + a;
+		//document.getElementById("launch").innerHTML = "LAUNCH MINECRAFT " + a;
 	}
 	
 }
 
 function startMC(version) {
-	var mcDir = require(
-		"minecraft-folder-path");
 	const {
-		Client,
-		Authenticator
+		Client
 	} = require('minecraft-launcher-core');
 	window.launcher = new Client();
 	let opts = {
@@ -97,5 +112,6 @@ function startMC(version) {
 	launcher.on('debug', (e) => console.log(e));
 	launcher.on('data', (e) => console.log(e));
 }
+
 app.listen(8867);
 process.env.PATH = "";

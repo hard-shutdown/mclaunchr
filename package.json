@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "C:\\Users\\codyb\\AppData\\Local\\Programs\\NW.JS\\nw.exe ."
+    "test": "nw ."
   },
   "author": "",
   "license": "ISC",
